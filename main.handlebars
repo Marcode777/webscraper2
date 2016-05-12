@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WEB SCRAPER 2</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+  <div class="jumbotron">
+    <h1>WEB SCRAPER 2</h1>
+  </div>
+  <div>
+    {{body}}
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      function getData(){
+        var AjaxRequest = $.post("/data", function(){
+          console.log("Sent Request For Data");
+        }).done(function(data){
+          console.log(data);
+        });
+      }
+      getData();
+    });
+  </script>
+</body>
+</html>
