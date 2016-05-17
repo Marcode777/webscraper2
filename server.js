@@ -4,6 +4,7 @@ var PORT = 7000;
 var expressHandlebars = require("express-handlebars");
 var cheerio = require("cheerio");
 var request = require("request");
+var bodyParser = require("body-parser")
 
 app.engine("handlebars", expressHandlebars({
   defaultLayout: "main"
