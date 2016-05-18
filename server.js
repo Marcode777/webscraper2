@@ -11,11 +11,24 @@ app.engine("handlebars", expressHandlebars({
 }));
 app.set("view engine", "handlebars");
 
-app.get("/", function (req, res){
-  res.render("home");
-});
+// app.get("/", function (req, res){
+//   res.render("home");
+// });
 
-app.post("/data", function (req, res){
+// app.get("/data", function (req, res){
+//   var dataToSendToClient = [];
+//   request("http://bloomberg.com", function(error, response, body){
+//     if(!error && response.statusCode == 200){
+//       $ = cheerio.load(body);
+//       $("h1").each(function(i, elem){
+//         dataToSendToClient.push($(this).text());
+//       })
+//       res.send({data: dataToSendToClient});
+//     };
+//   })
+// })
+
+app.get("/", function (req, res){
   var dataToSendToClient = [];
   request("http://bloomberg.com", function(error, response, body){
     if(!error && response.statusCode == 200){
@@ -23,11 +36,14 @@ app.post("/data", function (req, res){
       $("h1").each(function(i, elem){
         dataToSendToClient.push($(this).text());
       })
-      res.send({data: dataToSendToClient});
+      var data = {
+        datas: dataToSendToClient
+      }
+      res.render("home", data);
+      console.log(data);
     };
   })
 })
-
 
 
 
