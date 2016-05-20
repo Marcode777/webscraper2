@@ -33,6 +33,7 @@ app.get("/", function (req, res){
   request("http://bloomberg.com", function(error, response, body){
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
+      //h1 become a variable that comes from the user input from the webpage
       $("h1").each(function(i, elem){
         dataToSendToClient.push($(this).text());
       })
@@ -44,6 +45,7 @@ app.get("/", function (req, res){
     };
   })
 })
+
 
 
 
