@@ -11,6 +11,13 @@ app.engine("handlebars", expressHandlebars({
 }));
 app.set("view engine", "handlebars");
 
+//2nd start of jeffshapiro's suggestions
+// app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true}));
+//to support url encoded bodies
+//finish of 2nd start of jeffshapiro's suggestions
+
 // app.get("/", function (req, res){
 //   res.render("home");
 // });
@@ -28,6 +35,54 @@ app.set("view engine", "handlebars");
 //   })
 // })
 
+// begin albert's suggestions
+app.post("/data", function(req, res){
+  // console.log(req.body.url)
+  //made this requested data into a variable to place 
+  var address = '';
+  var dataToSendToClient = [];
+  // console.log(address);
+  address += req.body.url;
+  request(address, function(error, response, body){
+    // console.log('it works');
+    if(!error && response.statusCode == 200){
+      $ = cheerio.load(body);
+      // //h1 become a variable that comes from the user input from the webpage
+      $("div").each(function(i, elem){
+        dataToSendToClient.push($(this).text());
+        console.log(elem);
+      })
+    console.log(body);
+      var data = {
+        datas: dataToSendToClient
+      }
+      res.render("home", data);
+      console.log(data);
+    }
+  })
+});
+// //finish of albert's suggestions
+
+//begin jeffshapiro's suggestions
+// app.post("/data", function(req, res){
+//   console.log(req.body.htmlTag)
+//   var dataToSendToClient = [];
+//   request("http://bloomberg.com", function(error, response, body){
+//     if(!error && response.StatusCode == 200){
+//       $ = cheerio.load(body);
+//       //h1 becomes a variable with a value that comes from the web page
+//       $(req.body.htmlTag).each(function(i, elem){
+//         dataToSendToClient.push($(this).text());
+//       })
+//       var data = {
+//         datas: dataToSendToClient
+//       }
+//       console.log(data);
+//     }
+//   })
+// })
+
+//changed to app.get from app.post via albert's suggestion
 app.get("/", function (req, res){
   var dataToSendToClient = [];
   request("http://bloomberg.com", function(error, response, body){
