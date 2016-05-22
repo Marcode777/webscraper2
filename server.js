@@ -4,7 +4,9 @@ var PORT = 7000;
 var expressHandlebars = require("express-handlebars");
 var cheerio = require("cheerio");
 var request = require("request");
-var bodyParser = require("body-parser")
+var bodyParser = require("body-parser");
+
+app.use(express.static(__dirname+ "/assets")); //is saying all the static files your serving in in the assets folder so main.handlebars just automatics knows to look in the assets folder
 
 app.engine("handlebars", expressHandlebars({
   defaultLayout: "main"
@@ -47,7 +49,7 @@ app.post("/data", function(req, res){
     // console.log('it works');
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
-      // //h1 become a variable that comes from the user input from the webpage
+      // div can be changed and should become a variable that comes from the user input from the webpage just like how the url address is input by the user
       $("div").each(function(i, elem){
         dataToSendToClient.push($(this).text());
         console.log(elem);
