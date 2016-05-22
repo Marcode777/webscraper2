@@ -2,10 +2,10 @@
 <!-- <h1> Input Box for Url needs to be here</h1> -->
 <form id="target" method="post" action="/data">
   <label> URL Address:
-  <Input type="url" required>
+  <Input type="url" required name="url">
   </label>
-</form>
   <Input type="submit" value="send data">
+</form>
   {{#each datas}}
     <p>{{this}}</p>
   {{/each}}
