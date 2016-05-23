@@ -6,7 +6,7 @@ var cheerio = require("cheerio");
 var request = require("request");
 var bodyParser = require("body-parser");
 
-app.use(express.static(__dirname+ "/assets")); //is saying all the static files your serving in in the assets folder so main.handlebars just automatics knows to look in the assets folder
+app.use(express.static(__dirname+ "/assets")); //is saying all the static files you're serving is in the assets folder so main.handlebars just automatics knows to look in the assets folder
 
 app.engine("handlebars", expressHandlebars({
   defaultLayout: "main"
@@ -90,8 +90,8 @@ app.get("/", function (req, res){
   request("http://bloomberg.com", function(error, response, body){
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
-      //h1 become a variable that comes from the user input from the webpage
-      $("h1").each(function(i, elem){
+      //h1 become a variable that comes from the user input from the webpage, and yes, it does work!
+      $("div").each(function(i, elem){
         dataToSendToClient.push($(this).text());
       })
       var data = {
@@ -102,6 +102,25 @@ app.get("/", function (req, res){
     };
   })
 })
+
+// will be using this to get the element data from user on second form
+// app.get("/", function (req, res){
+//   var elements = [];
+//   request("http://bloomberg.com", function(error, response, body){
+//     if(!error && response.statusCode == 200){
+//       $ = cheerio.load(body);
+//       //h1 become a variable that comes from the user input from the webpage
+//       $("h1").each(function(i, elem){
+//         elements.push($(this).text());
+//       })
+//       var data = {
+//         datas: elements
+//       }
+//       res.render("home", data);
+//       console.log(data);
+//     };
+//   })
+// })
 
 
 
