@@ -18,6 +18,7 @@ app.set("view engine", "handlebars");
 
 app.use(bodyParser.urlencoded({ extended: true}));
 //to support url encoded bodies
+// app.use(bodyParser.text({ inflated:true})); //this is my own injection
 //finish of 2nd start of jeffshapiro's suggestions
 
 // app.get("/", function (req, res){
@@ -103,14 +104,14 @@ app.get("/", function (req, res){
   })
 })
 
-// will be using this to get the element data from user on second form
+//will be using this to get the element data from user on second form
 // app.get("/", function (req, res){
 //   var elements = [];
 //   request("http://bloomberg.com", function(error, response, body){
 //     if(!error && response.statusCode == 200){
 //       $ = cheerio.load(body);
 //       //h1 become a variable that comes from the user input from the webpage
-//       $("h1").each(function(i, elem){
+//       var input = $("string").each(function(i, elem){
 //         elements.push($(this).text());
 //       })
 //       var data = {
