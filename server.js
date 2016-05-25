@@ -71,6 +71,7 @@ app.post("/data", function(req, res){
 // //finish of albert's suggestions
 
 //this will be used for the second form
+//this route was changed to dataTransform by Nate
 app.post("/data", function(req, res){
   // console.log(req.body.url)
   //made this requested data into a variable to place 
@@ -83,7 +84,7 @@ app.post("/data", function(req, res){
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
       // element is a variable that comes from the user input from the webpage just like how the url address is input by the user
-      $("element").each(function(i, elem){
+      $(element).each(function(i, elem){
         dataToSendToClient.push($(this).text());
         console.log(elem);
       })
