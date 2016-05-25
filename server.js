@@ -18,25 +18,29 @@ app.set("view engine", "handlebars");
 
 app.use(bodyParser.urlencoded({ extended: true}));
 //to support url encoded bodies
-// app.use(bodyParser.text({ inflated:true})); //this is my own injection
-//finish of 2nd start of jeffshapiro's suggestions
+app.use(bodyParser.json());
+//to support JSON bodies
 
-// app.get("/", function (req, res){
-//   res.render("home");
-// });
 
-// app.get("/data", function (req, res){
-//   var dataToSendToClient = [];
-//   request("http://bloomberg.com", function(error, response, body){
-//     if(!error && response.statusCode == 200){
-//       $ = cheerio.load(body);
-//       $("h1").each(function(i, elem){
-//         dataToSendToClient.push($(this).text());
-//       })
-//       res.send({data: dataToSendToClient});
-//     };
-//   })
-// })
+
+//changed to app.get from app.post via albert's suggestion
+app.get("/", function (req, res){
+  var dataToSendToClient = [];
+  request("http://bloomberg.com", function(error, response, body){
+    if(!error && response.statusCode == 200){
+      $ = cheerio.load(body);
+      //h1 becomes a variable that comes from the user input from the webpage, and yes, it does work!
+      $("h1").each(function(i, elem){
+        dataToSendToClient.push($(this).text());
+      })
+      var data = {
+        datas: dataToSendToClient
+      }
+      res.render("home", data);
+      console.log(data);
+    };
+  })
+})
 
 // begin albert's suggestions
 app.post("/data", function(req, res){
@@ -50,8 +54,8 @@ app.post("/data", function(req, res){
     // console.log('it works');
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
-      // div can be changed and should become a variable that comes from the user input from the webpage just like how the url address is input by the user
-      $("div").each(function(i, elem){
+      // h1 can be changed and should become a variable that comes from the user input from the webpage just like how the url address is input by the user
+      $("h1").each(function(i, elem){
         dataToSendToClient.push($(this).text());
         console.log(elem);
       })
@@ -66,64 +70,32 @@ app.post("/data", function(req, res){
 });
 // //finish of albert's suggestions
 
-//begin jeffshapiro's suggestions
-// app.post("/data", function(req, res){
-//   console.log(req.body.htmlTag)
-//   var dataToSendToClient = [];
-//   request("http://bloomberg.com", function(error, response, body){
-//     if(!error && response.StatusCode == 200){
-//       $ = cheerio.load(body);
-//       //h1 becomes a variable with a value that comes from the web page
-//       $(req.body.htmlTag).each(function(i, elem){
-//         dataToSendToClient.push($(this).text());
-//       })
-//       var data = {
-//         datas: dataToSendToClient
-//       }
-//       console.log(data);
-//     }
-//   })
-// })
-
-//changed to app.get from app.post via albert's suggestion
-app.get("/", function (req, res){
+//this will be used for the second form
+app.post("/data", function(req, res){
+  // console.log(req.body.url)
+  //made this requested data into a variable to place 
+  var element = '';
   var dataToSendToClient = [];
-  request("http://bloomberg.com", function(error, response, body){
+  // console.log(address);
+  element += req.body.text;
+  request(element, function(error, response, body){
+    // console.log('it works');
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
-      //h1 become a variable that comes from the user input from the webpage, and yes, it does work!
-      $("div").each(function(i, elem){
+      // element is a variable that comes from the user input from the webpage just like how the url address is input by the user
+      $("element").each(function(i, elem){
         dataToSendToClient.push($(this).text());
+        console.log(elem);
       })
-      var data = {
+    console.log(body);
+      var nice = {
         datas: dataToSendToClient
       }
-      res.render("home", data);
-      console.log(data);
-    };
+      res.render("home", nice);
+      console.log(nice);
+    }
   })
-})
-
-//will be using this to get the element data from user on second form
-// app.get("/", function (req, res){
-//   var elements = [];
-//   request("http://bloomberg.com", function(error, response, body){
-//     if(!error && response.statusCode == 200){
-//       $ = cheerio.load(body);
-//       //h1 become a variable that comes from the user input from the webpage
-//       var input = $("string").each(function(i, elem){
-//         elements.push($(this).text());
-//       })
-//       var data = {
-//         datas: elements
-//       }
-//       res.render("home", data);
-//       console.log(data);
-//     };
-//   })
-// })
-
-
+});
 
 
 //Connect to PORT
