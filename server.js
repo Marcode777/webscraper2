@@ -13,8 +13,7 @@ app.engine("handlebars", expressHandlebars({
 }));
 app.set("view engine", "handlebars");
 
-//2nd start of jeffshapiro's suggestions
-// app.use(bodyParser.json());
+
 
 app.use(bodyParser.urlencoded({ extended: true}));
 //to support url encoded bodies
@@ -47,9 +46,11 @@ app.post("/data", function(req, res){
   // console.log(req.body.url)
   //made this requested data into a variable to place 
   var address = '';
+  var element = '';
   var dataToSendToClient = [];
   // console.log(address);
   address += req.body.url;
+  element += req.body.elements;
   request(address, function(error, response, body){
     // console.log('it works');
     if(!error && response.statusCode == 200){
@@ -72,6 +73,8 @@ app.post("/data", function(req, res){
 
 //this will be used for the second form
 //this route was changed to dataTransform by Nate
+// ***remember there can only be 1 post route, and express will only check the first one***
+
 app.post("/data", function(req, res){
   // console.log(req.body.url)
   //made this requested data into a variable to place 
@@ -84,7 +87,8 @@ app.post("/data", function(req, res){
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
       // element is a variable that comes from the user input from the webpage just like how the url address is input by the user
-      $(element).each(function(i, elem){
+      //substitute what is in between the parentheses as element div from the user input that the user wants
+      $(h1).each(function(i, elem){
         dataToSendToClient.push($(this).text());
         console.log(elem);
       })
