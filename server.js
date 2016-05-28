@@ -29,6 +29,7 @@ app.get("/", function (req, res){
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
       //h1 becomes a variable that comes from the user input from the webpage, and yes, it does work!
+      //also whatever is inside the parentheses also has to be in between quotations
       $("h1").each(function(i, elem){
         dataToSendToClient.push($(this).text());
       })

@@ -1,6 +1,9 @@
 .jumbotron {
-  background-color: aqua;
+  background-color: #0066ff;
 }
 body{
-  background-color: #b3d9ff;
+  background-color: #538cc6;
+}
+.section {
+  background-color: #3385ff;
 }
