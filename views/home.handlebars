@@ -1,19 +1,20 @@
 
 <!-- <h1> Input Box for Url needs to be here</h1> -->
 <form id="target" method="post" action="/data">
-  <label> Enter the URL address of the website you want to scrape data from:
-  <Input type="url" required name="url">
+  <label> Enter the URL address of the website and also the element you want to scrape for:
+  <Input type="url" required name="url" placeholder="http://www.website.com">
+  <Input type="text" required name="elementz" placeholder="html element">
   </label>
   <Input type="submit" value="send data">
 </form>
 
 <!--second form which will be used for the user to specify which actual elements to scrape for-->
-<form id="target" method="post" action="/data">
+<!-- <form id="target" method="post" action="/data">
   <label> Enter the element to scrape data for:
-  <Input type="text" required name="elements">
+  <Input type="text" required name="elementz">
   </label>
   <Input type="submit" value="send data">
-</form>
+</form> -->
   {{#each datas}}
     <p>{{this}}</p>
   {{/each}}
