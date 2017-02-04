@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 
 
-//changed to app.get from app.post via albert's suggestion
+// changed to app.get from app.post via albert's suggestion
 app.get("/", function (req, res){
   var dataToSendToClient = [];
   request("http://bloomberg.com", function(error, response, body){
@@ -51,13 +51,14 @@ app.post("/data", function(req, res){
   var dataToSendToClient = [];
   // console.log(address);
   address += req.body.url;
-  element += req.body.elements;
+  element += req.body.elementz;
   request(address, function(error, response, body){
     // console.log('it works');
     if(!error && response.statusCode == 200){
       $ = cheerio.load(body);
       // h1 can be changed and should become a variable that comes from the user input from the webpage just like how the url address is input by the user
-      $("h1").each(function(i, elem){
+      // remember, that it has to be in quotation marks
+      $(element).each(function(i, elem){
         dataToSendToClient.push($(this).text());
         console.log(elem);
       })
@@ -70,38 +71,38 @@ app.post("/data", function(req, res){
     }
   })
 });
-// //finish of albert's suggestions
+//finish of albert's suggestions
 
 //this will be used for the second form
 //this route was changed to dataTransform by Nate
 // ***remember there can only be 1 post route, and express will only check the first one***
 
-app.post("/data", function(req, res){
-  // console.log(req.body.url)
-  //made this requested data into a variable to place 
-  var element = '';
-  var dataToSendToClient = [];
-  // console.log(address);
-  element += req.body.text;
-  request(element, function(error, response, body){
-    // console.log('it works');
-    if(!error && response.statusCode == 200){
-      $ = cheerio.load(body);
-      // element is a variable that comes from the user input from the webpage just like how the url address is input by the user
-      //substitute what is in between the parentheses as element div from the user input that the user wants
-      $(h1).each(function(i, elem){
-        dataToSendToClient.push($(this).text());
-        console.log(elem);
-      })
-    console.log(body);
-      var nice = {
-        datas: dataToSendToClient
-      }
-      res.render("home", nice);
-      console.log(nice);
-    }
-  })
-});
+// app.post("/data", function(req, res){
+//   // console.log(req.body.url)
+//   //made this requested data into a variable to place 
+//   var element = '';
+//   var dataToSendToClient = [];
+//   // console.log(address);
+//   element += req.body.elementz;
+//   request(element, function(error, response, body){
+//     // console.log('it works');
+//     if(!error && response.statusCode == 200){
+//       $ = cheerio.load(body);
+//       // element is a variable that comes from the user input from the webpage just like how the url address is input by the user
+//       //substitute what is in between the parentheses as element div from the user input that the user wants
+//       $("h2").each(function(i, elem){
+//         dataToSendToClient.push($(this).text());
+//         console.log(elem);
+//       })
+//     console.log(body);
+//       var nice = {
+//         datas: dataToSendToClient
+//       }
+//       res.render("home", nice);
+//       console.log(nice);
+//     }
+//   })
+// });
 
 
 //Connect to PORT
