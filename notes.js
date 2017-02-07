@@ -1,0 +1,1 @@
+// miscellaneous REGEX notes for parsing: to look for string matches just use the following code in javascript: "test/abcd{kolokoy}test{kolokoyz}test".match(/[^{}]+(?=\})/g)
